@@ -130,17 +130,17 @@
       /* ---- calculator UI end-to-end ---- */
       await test('kalkulator: submit → hasil tampil', async () => {
         resetState();
-        document.body.insertAdjacentHTML('beforeend', fixtureForm());
+        document.body.insertAdjacentHTML('beforeend', await fixtureForm());
         hydrateIcons();
 
         initCalculator();
         const form = document.getElementById('calculator-form');
+        if (form.querySelector('[name="neck"], #neck, label[for="neck"]')) throw new Error('kolom lingkar leher masih ada');
 
         const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
-        // pilih pria dulu supaya neck tampil
         const male = document.querySelector('#gender-seg .seg-option[data-value="male"]');
         male?.click();
-        set('age', 32); set('weight', 88); set('height', 178); set('neck', 40); set('waist', 102); set('targetWeight', ''); set('activityLevel', 'moderate');
+        set('age', 32); set('weight', 88); set('height', 178); set('waist', 102); set('targetWeight', ''); set('activityLevel', 'moderate');
 
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         await sleep(300);
@@ -150,6 +150,7 @@
         if (content.querySelector('.big-bf-number')?.textContent.includes('NaN')) throw new Error('NaN di hasil');
         if (!getState().recommendation.mealPlan.length) throw new Error('menu tidak dibuat');
         if (getState().assessment.bmi !== 27.8) throw new Error('BMI tidak sesuai input');
+        if (!getState().assessment.formula.startsWith('Deurenberg')) throw new Error('estimasi tanpa leher tidak digunakan');
         if (!getPlan()) throw new Error('rencana tidak tersimpan');
         if (getCurrentWeek() !== 1) throw new Error('minggu harus 1');
 
@@ -199,24 +200,12 @@
       }
     });
 
-    /* fixture form kalkulator minimal (ID sama dengan index.html) */
-    function fixtureForm() {
-      return `
-        <form id="calculator-form" novalidate>
-          <div id="gender-seg" class="segmented-control">
-            <button type="button" class="seg-option" data-value="male">Pria</button>
-            <button type="button" class="seg-option" data-value="female">Wanita</button>
-          </div>
-          <div class="input-group"><input id="age" name="age" type="number"></div>
-          <div class="input-group"><input id="weight" name="weight" type="number"></div>
-          <div class="input-group"><input id="height" name="height" type="number"></div>
-          <div class="input-group"><input id="neck" name="neck" type="number"></div>
-          <div class="input-group"><input id="waist" name="waist" type="number"></div>
-          <div class="input-group"><input id="targetWeight" name="targetWeight" type="number"></div>
-          <div class="input-group"><select id="activityLevel" name="activityLevel"><option value="sedentary">s</option><option value="light">l</option><option value="moderate">m</option><option value="active">a</option><option value="very_active">va</option></select></div>
-          <button type="submit">Hitung</button>
-        </form>
-        <div id="result-panel"><div id="result-empty"></div><div id="result-content" hidden></div></div>`;
+    /* Pakai formulir asli agar pengujian mengikuti perubahan index.html. */
+    async function fixtureForm() {
+      const response = await fetch('./index.html');
+      if (!response.ok) throw new Error('gagal memuat formulir kalkulator');
+      const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+      return page.getElementById('calculator-form').outerHTML + page.getElementById('result-panel').outerHTML;
     }
   </script>
 </body>

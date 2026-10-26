@@ -26,7 +26,7 @@ const BMI_SEGMENTS = [
   { to: 45, label: 'Obesitas', color: '#dc2626' },
 ];
 
-const FIELD_IDS = ['gender', 'age', 'weight', 'height', 'neck', 'waist', 'hip', 'targetWeight', 'activityLevel'];
+const FIELD_IDS = ['gender', 'age', 'weight', 'height', 'waist', 'hip', 'targetWeight', 'activityLevel'];
 
 export function initCalculator() {
   const form = document.getElementById('calculator-form');
@@ -103,7 +103,6 @@ function onSubmit(event) {
     age: fd.get('age'),
     weight: fd.get('weight'),
     height: fd.get('height'),
-    neck: fd.get('neck'),
     waist: fd.get('waist'),
     hip: fd.get('hip'),
     targetWeight: fd.get('targetWeight'),

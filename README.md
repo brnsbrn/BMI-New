@@ -5,7 +5,7 @@ Rewrite statis dari aplikasi referensi Laravel (`Bmi-Beta`) — **tanpa backend,
 ## Fitur
 
 - Kalkulator komposisi tubuh:
-  - **Body fat** — pria: formula **US Navy (Hodgdon–Beckett)**; wanita: **RFM (Woolcott & Bergman 2018)**. Estimasi pria di luar rentang 1–60% ditolak dengan pesan pemeriksaan pengukuran, bukan dipaksa menjadi 1%; batas perhitungan wanita tetap 1–60%.
+  - **Body fat** — formulir tanpa kolom lingkar leher: pria memakai estimasi **Deurenberg** dari BMI, umur, dan jenis kelamin; wanita memakai **RFM (Woolcott & Bergman 2018)** jika pinggang diisi, atau Deurenberg jika kosong. Estimasi pria di luar rentang 1–60% ditolak dengan pesan pemeriksaan data, bukan dipaksa menjadi 1%; batas perhitungan wanita tetap 1–60%. Engine tetap mendukung **US Navy (Hodgdon–Beckett)** untuk input lama yang memiliki data leher dan pinggang.
   - **BMI** (batas 18.5 / 25 / 30), **BMR** (Mifflin-St Jeor), **TDEE** (faktor aktivitas), **target berat** (otomatis dari target body fat, atau manual).
 - Rekomendasi personal (rule 1:1 dari `config/recommendation.php`):
   - Target body fat + timeline per kategori.

@@ -491,6 +491,22 @@ test('recalculation changes BMI, body fat, BMR and TDEE', () => {
 });
 
 for (const gender of ['male', 'female']) {
+  for (const waist of ['', '80']) {
+    test(`${gender}: form without neck, waist ${waist || 'empty'} calculates BMI and recommendation`, () => {
+      const result = validateCalculatorForm({ gender, age: '30', weight: '65', height: '165', waist, hip: '', targetWeight: '', activityLevel: 'moderate' });
+      assert(result.ok, JSON.stringify(result.errors));
+      assert(result.values.neck === null);
+      const a = buildAssessment(result.values);
+      assert(a.bmi === 23.9 && a.bmiLabel === 'Normal');
+      assertClose(a.bodyFat, gender === 'female' && waist ? 34.8 : gender === 'male' ? 19.4 : 30.2);
+      assert(a.formula.startsWith(gender === 'female' && waist ? 'RFM' : 'Deurenberg'));
+      assert(Number.isFinite(a.bmr) && Number.isFinite(a.tdee) && Number.isFinite(a.targetWeight));
+      const r = buildRecommendation(a);
+      assert(Number.isFinite(r.calorieTarget) && r.mealPlan.length === 5 && r.weeklySchedule.length === 7);
+      const updated = buildAssessment({ ...result.values, weight: 75, height: 170 });
+      assert(updated.bmi === 26 && updated.bmiLabel === 'Berat badan berlebih');
+    });
+  }
   test(`${gender}: missing circumferences uses Deurenberg, with correct method label`, () => {
     const a = buildAssessment({ gender, age: 30, weight: 65, height: 165, neck: null, waist: null });
     assertClose(a.bodyFat, gender === 'male' ? 19.4 : 30.2);
