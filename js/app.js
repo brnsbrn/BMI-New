@@ -18,7 +18,7 @@ function boot() {
     initShell();
     const modules = {
       calculator: './ui/calculator-ui.js?v=simplified-ui-15',
-      plan: './ui/plan-ui.js?v=simplified-ui-15',
+      plan: './ui/plan-ui.js?v=plan-without-weight-16',
       progress: './ui/progress-ui.js?v=simplified-ui-15',
       checkin: './ui/checkin-ui.js?v=simplified-ui-15',
     };
