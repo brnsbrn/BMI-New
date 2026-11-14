@@ -6,14 +6,14 @@ Rewrite statis dari aplikasi referensi Laravel (`Bmi-Beta`) — **tanpa backend,
 
 - Kalkulator komposisi tubuh:
   - **Body fat** — formulir tanpa kolom lingkar leher: pria memakai estimasi **Deurenberg** dari BMI, umur, dan jenis kelamin; wanita memakai **RFM (Woolcott & Bergman 2018)** jika pinggang diisi, atau Deurenberg jika kosong. Estimasi pria di luar rentang 1–60% ditolak dengan pesan pemeriksaan data, bukan dipaksa menjadi 1%; batas perhitungan wanita tetap 1–60%. Engine tetap mendukung **US Navy (Hodgdon–Beckett)** untuk input lama yang memiliki data leher dan pinggang.
-  - **BMI** (batas 18.5 / 25 / 30), **BMR** (Mifflin-St Jeor), **TDEE** (faktor aktivitas), **target berat** (otomatis dari target body fat, atau manual).
+  - **BMI** (batas 18.5 / 25 / 30), **BMR** (Mifflin-St Jeor), dan **TDEE** (faktor aktivitas). Target berat dihitung otomatis untuk rencana, tanpa kolom atau tampilan target berat di kalkulator.
 - Rekomendasi personal (rule 1:1 dari `config/recommendation.php`):
   - Target body fat + timeline per kategori.
-  - Target kalori & makronutrien dengan safety floor **1200 kkal** dan penyesuaian target berat manual (±500 / ±350 / ±250 / 0).
+  - Target kalori & makronutrien dengan safety floor **1200 kkal** berdasarkan kategori komposisi tubuh.
   - **Contoh menu harian** 5 sesi (Sarapan 20% · Snack 10% · Makan Siang 30% · Snack Sore 10% · Makan Malam 30%), deterministik per profil.
   - **Jadwal latihan** mingguan (10 template), bisa dicentang per minggu.
 - **Rencana** tersimpan: target, nutrisi, menu, jadwal latihan, Minggu berjalan.
-- **Check-in mingguan**: berat (wajib), pinggang & body fat (opsional), latihan selesai, energi, kesulitan, catatan. Satu kali per minggu; setelah tersimpan Minggu berjalan naik.
+- **Check-in mingguan**: berat (wajib), pinggang & body fat (opsional), latihan selesai, dan catatan opsional. Satu kali per minggu; setelah tersimpan Minggu berjalan naik.
 - **Progres**: ringkasan (berat terakhir, perubahan, body fat, pinggang), **grafik SVG native** (tanpa CDN) untuk berat/body fat/pinggang + tooltip, riwayat check-in.
 - **Backup JSON**: ekspor/impor (validasi schema + pratinjau sebelum mengganti data) dan reset data.
 - Ramah aksesibilitas: label, fokus terlihat, Escape menutup dialog, fallback teks untuk grafik, sarana keyboard untuk audio.

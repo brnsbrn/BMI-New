@@ -71,7 +71,7 @@
       });
 
       await test('validation checkin ok', async () => {
-        const res = validateCheckinForm({ weight: '70', waist: '80', bodyFat: '20', workoutsCompleted: '4', energy: '3', difficulty: '3', feedback: '' });
+        const res = validateCheckinForm({ weight: '70', waist: '80', bodyFat: '20', workoutsCompleted: '4', feedback: '' });
         if (!res.ok) throw new Error(JSON.stringify(res.errors));
       });
 
@@ -140,7 +140,7 @@
         const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
         const male = document.querySelector('#gender-seg .seg-option[data-value="male"]');
         male?.click();
-        set('age', 32); set('weight', 88); set('height', 178); set('waist', 102); set('targetWeight', ''); set('activityLevel', 'moderate');
+        set('age', 32); set('weight', 88); set('height', 178); set('waist', 102); set('activityLevel', 'moderate');
 
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         await sleep(300);
@@ -155,7 +155,7 @@
         if (getCurrentWeek() !== 1) throw new Error('minggu harus 1');
 
         const first = getState().assessment;
-        set('weight', 98); set('waist', 110); set('targetWeight', 75);
+        set('weight', 98); set('waist', 110);
         document.getElementById('weight').dispatchEvent(new Event('input', { bubbles: true }));
         if (!content.hidden) throw new Error('hasil lama masih terlihat setelah input berubah');
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
@@ -163,10 +163,10 @@
         const second = getState().assessment;
         if (second.bmi !== 30.9 || second.bmi === first.bmi) throw new Error('BMI tidak diperbarui');
         if (second.bodyFat <= first.bodyFat) throw new Error('body fat tidak diperbarui');
-        if (second.targetWeight !== 75) throw new Error('target manual tidak terbaca');
+        if (second.targetWeightManual) throw new Error('target harus dihitung otomatis');
         if (!content.querySelector('.bmi-number').textContent.includes('30,9')) throw new Error('hasil DOM tidak terbaru');
 
-        set('weight', 88); set('waist', 102); set('targetWeight', '');
+        set('weight', 88); set('waist', 102);
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         await sleep(300);
 
@@ -183,7 +183,7 @@
         toggleWorkout(week, (getPlan().workouts.find((w) => w.type !== 'rest').day_of_week));
         if (completedCount(getPlan()).done !== 1) throw new Error('toggle gagal');
 
-        addCheckin({ week, date: '2026-08-30', weight: 86.5, waist: 99, bodyFat: null, workoutsScheduled: scheduled, workoutsCompleted: 1, energy: 4, difficulty: 3, feedback: '', weightChange: -1.5, waistChange: -3 });
+        addCheckin({ week, date: '2026-08-30', weight: 86.5, waist: 99, bodyFat: null, workoutsScheduled: scheduled, workoutsCompleted: 1, feedback: '', weightChange: -1.5, waistChange: -3 });
         if (!hasCheckinForWeek(week)) throw new Error('check-in belum tersimpan');
         incrementWeek();
         if (getCurrentWeek() !== week + 1) throw new Error('minggu tidak maju');

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kalkulator komposisi tubuh BodyFit Kaltim untuk menghitung body fat, BMI, BMR, TDEE, target berat, dan rekomendasi nutrisi serta latihan personal.">
+  <meta name="description" content="Kalkulator komposisi tubuh BodyFit Kaltim untuk menghitung body fat, BMI, BMR, TDEE, dan rekomendasi nutrisi serta latihan personal.">
   <title>BodyFit — Kalkulator Komposisi Tubuh</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="css/progress.css">
   <link rel="stylesheet" href="css/check-in.css">
   <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/kaltim-theme.css?v=bmi-safety-13">
+  <link rel="stylesheet" href="css/kaltim-theme.css?v=simplified-ui-15">
 </head>
 <body data-page="calculator">
   <a class="skip-link" href="#main-content">Langsung ke konten</a>
@@ -109,26 +109,16 @@
               <p class="input-note">Data lingkar opsional. Panggul dicatat sebagai pengukuran tambahan.</p>
             </div>
 
-            <div>
-              <div class="input-group">
-                <label class="input-label" for="targetWeight">Target Berat</label>
-                <div class="form-control-wrap with-unit">
-                  <input class="form-control" type="number" id="targetWeight" name="targetWeight" min="30" max="300" step="0.1" inputmode="decimal" autocomplete="off" placeholder="Otomatis">
-                  <span class="unit-suffix" aria-hidden="true">kg</span>
-                </div>
-                <p class="field-error" id="targetWeight-error" hidden></p>
-              </div>
-              <div class="input-group">
-                <label class="input-label" for="activityLevel">Aktivitas</label>
-                <select class="form-control" id="activityLevel" name="activityLevel">
-                  <option value="sedentary">Jarang olahraga</option>
-                  <option value="light">Ringan (1–2x/minggu)</option>
-                  <option value="moderate" selected>Sedang (3–4x/minggu)</option>
-                  <option value="active">Aktif (5–6x/minggu)</option>
-                  <option value="very_active">Sangat aktif</option>
-                </select>
-                <p class="field-error" id="activityLevel-error" hidden></p>
-              </div>
+            <div class="input-group">
+              <label class="input-label" for="activityLevel">Aktivitas</label>
+              <select class="form-control" id="activityLevel" name="activityLevel">
+                <option value="sedentary">Jarang olahraga</option>
+                <option value="light">Ringan (1–2x/minggu)</option>
+                <option value="moderate" selected>Sedang (3–4x/minggu)</option>
+                <option value="active">Aktif (5–6x/minggu)</option>
+                <option value="very_active">Sangat aktif</option>
+              </select>
+              <p class="field-error" id="activityLevel-error" hidden></p>
             </div>
 
             <div class="result-actions" style="margin-top:22px">
@@ -144,11 +134,11 @@
             <div class="card empty-state result-placeholder" id="result-empty">
               <div class="empty-icon" data-icon="calculator" aria-hidden="true"></div>
               <h2>Belum ada hasil</h2>
-              <p>Isi data tubuh Anda lalu klik Hitung untuk melihat persentase lemak tubuh, BMI, kebutuhan kalori, dan target berat.</p>
+              <p>Isi data tubuh Anda lalu klik Hitung untuk melihat persentase lemak tubuh, BMI, dan kebutuhan kalori.</p>
               <ul class="empty-features" role="list">
                 <li data-icon="ruler">Input pengukuran utama</li>
                 <li data-icon="activity">Ringkasan kebutuhan energi</li>
-                <li data-icon="target">Target dan rekomendasi personal</li>
+                <li data-icon="target">Rekomendasi personal</li>
               </ul>
             </div>
             <div id="result-content" hidden></div>
@@ -180,6 +170,6 @@
   <div id="modal-root"></div>
   <div class="chart-tooltip" id="chart-tooltip" role="tooltip" hidden></div>
   <script defer src="js/runtime-notice.js"></script>
-  <script type="module" src="js/app.js?v=no-neck-14"></script>
+  <script type="module" src="js/app.js?v=simplified-ui-15"></script>
 </body>
 </html>

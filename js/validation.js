@@ -111,16 +111,6 @@ export function validateCheckinForm(values) {
     v.workoutsCompleted = wc;
   }
 
-  // energy & difficulty 1..5
-  for (const field of ['energy', 'difficulty']) {
-    const val = parseNum(v[field]);
-    if (val === null || val < 1 || val > 5) {
-      errors[field] = `${field === 'energy' ? 'Tingkat energi' : 'Kesulitan'} 1–5.`;
-    } else {
-      v[field] = val;
-    }
-  }
-
   // feedback ≤ 1000 char
   const fb = v.feedback == null ? '' : String(v.feedback);
   if (fb.length > 1000) {

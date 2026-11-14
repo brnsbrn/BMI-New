@@ -133,7 +133,7 @@ function historyRows(checkins) {
         ['Berat', `${fmtNum(c.weight, 1)} kg`, changeClass(c.weightChange)],
         ['Pinggang', c.waist != null ? `${fmtNum(c.waist, 1)} cm` : '—', c.waistChange != null ? changeClass(c.waistChange) : ''],
         ['Body fat', c.bodyFat != null ? `${fmtNum(c.bodyFat, 1)}%` : '—', ''],
-        ['Energi', `${c.energy}/5`, ''],
+        ...(c.energy != null ? [['Energi', `${c.energy}/5`, '']] : []),
       ];
       return `
         <div class="checkin-card">
@@ -153,7 +153,7 @@ function historyRows(checkins) {
               .join('')}
           </div>
           ${c.workoutsCompleted != null
-            ? `<p class="notes-hint" style="margin-top:10px">Latihan ${c.workoutsCompleted}/${c.workoutsScheduled} · Kesulitan ${c.difficulty}/5</p>`
+            ? `<p class="notes-hint" style="margin-top:10px">Latihan ${c.workoutsCompleted}/${c.workoutsScheduled}${c.difficulty != null ? ` · Kesulitan ${c.difficulty}/5` : ''}</p>`
             : ''}
           ${c.feedback ? `<p class="checkin-feedback">“${escapeAttr(c.feedback)}”</p>` : ''}
         </div>`;

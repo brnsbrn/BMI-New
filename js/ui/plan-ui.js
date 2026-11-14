@@ -46,10 +46,6 @@ function renderPage(plan) {
         <h1>Rencana Saya</h1>
         <p class="subtitle">Target nutrisi, contoh menu, dan jadwal latihan untuk minggu ini.</p>
       </div>
-      <div class="page-header-actions">
-        <a class="btn btn-secondary" href="index.html">${icon('calculator', { size: 17 })} Hitung Ulang</a>
-        <a class="btn btn-primary" href="check-in.html">${icon('calendar', { size: 17 })} Check-in Mingguan</a>
-      </div>
     </div>
 
     <div class="plan-hero">
@@ -112,16 +108,9 @@ function renderPage(plan) {
             <div class="pa-row"><span>Berat</span><span>${fmtNum(a.weight, 1)} kg</span></div>
             <div class="pa-row"><span>Lingkar pinggang</span><span>${fmtNum(a.waist, 1)} cm</span></div>
             <div class="pa-row"><span>BMR</span><span>${fmtKcal(a.bmr)} kkal</span></div>
-            <div class="pa-row"><span>Kategori</span><span>${escapeHtml(a.categoryLabel)}</span></div>
-            <button type="button" class="link-btn" style="margin-top:8px" onclick="location.href='index.html'">Hitung ulang pengukuran →</button>` : `
+            <div class="pa-row"><span>Kategori</span><span>${escapeHtml(a.categoryLabel)}</span></div>` : `
             <div class="pa-row"><span>Belum ada pengukuran tersimpan.</span></div>`}
         </div>
-
-        <section class="card" style="background:linear-gradient(180deg,#F7FBFA 0%,#F2F7F8 100%)">
-          <h2 class="card-title">Check-in nominal</h2>
-          <p style="color:var(--color-text-muted);font-size:13.5px">Catat berat, lingkar pinggang, energi, dan tingkat kesulitan latihan setiap akhir minggu untuk memantau progres.</p>
-          <a class="btn btn-primary" href="check-in.html" style="margin-top:12px">${icon('calendar', { size: 17 })} Lakukan Check-in</a>
-        </section>
       </div>
     </div>`;
 }

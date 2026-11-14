@@ -542,8 +542,8 @@ test('calculator validation rejects malformed optional values, Infinity and frac
   }
 });
 
-test('check-in values are numeric after form validation', () => {
-  const result = validateCheckinForm({ weight: '70.5', waist: '80', bodyFat: '20', workoutsCompleted: '4', energy: '3', difficulty: '3' });
+test('check-in values are numeric without energy or difficulty fields', () => {
+  const result = validateCheckinForm({ weight: '70.5', waist: '80', bodyFat: '20', workoutsCompleted: '4' });
   assert(result.ok && result.values.weight === 70.5 && result.values.waist === 80);
 });
 

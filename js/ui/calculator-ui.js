@@ -12,7 +12,7 @@ import {
   createPlanFromRecommendation,
   savePlan,
 } from '../state.js';
-import { validateCalculatorForm, showFieldError, clearFieldErrors } from '../validation.js?v=male-fix-12';
+import { validateCalculatorForm, showFieldError, clearFieldErrors } from '../validation.js?v=simplified-ui-15';
 import { icon } from './icons.js';
 import { toast } from './modal.js';
 import { fmtNum, fmtKcal, escapeHtml } from '../format.js';
@@ -26,7 +26,7 @@ const BMI_SEGMENTS = [
   { to: 45, label: 'Obesitas', color: '#dc2626' },
 ];
 
-const FIELD_IDS = ['gender', 'age', 'weight', 'height', 'waist', 'hip', 'targetWeight', 'activityLevel'];
+const FIELD_IDS = ['gender', 'age', 'weight', 'height', 'waist', 'hip', 'activityLevel'];
 
 export function initCalculator() {
   const form = document.getElementById('calculator-form');
@@ -105,7 +105,6 @@ function onSubmit(event) {
     height: fd.get('height'),
     waist: fd.get('waist'),
     hip: fd.get('hip'),
-    targetWeight: fd.get('targetWeight'),
     activityLevel: fd.get('activityLevel') || 'moderate',
   };
 
@@ -229,11 +228,6 @@ function assessmentCard(a) {
             <span class="badge badge-neutral">Massa lemak ${fmtNum(a.fatMass, 1)} kg</span>
           </div>
         </div>
-        <div class="target-panel">
-          <div class="tp-label">Target</div>
-          <div class="tp-value">${a.targetWeight != null ? `${fmtNum(a.targetWeight, 1)} kg` : '—'}</div>
-          <div class="tp-note">${a.targetBodyFat != null ? `Target body fat ${fmtNum(a.targetBodyFat)}% · ` : ''}${escapeHtml(a.timeline)}</div>
-        </div>
       </div>
 
       <div class="spectrum">
@@ -250,7 +244,6 @@ function assessmentCard(a) {
         ${metricCard('Tinggi', `${fmtNum(a.height, 1)} cm`, 'ruler')}
         ${metricCard('BMR', `${fmtKcal(a.bmr)} kkal`, 'flame')}
         ${metricCard('Kebutuhan Kalori (TDEE)', `${fmtKcal(a.tdee)} kkal`, 'zap')}
-        ${metricCard('Target Berat', a.targetWeight != null ? `${fmtNum(a.targetWeight, 1)} kg` : '—', 'scale')}
       </div>
 
       <div class="bmi-spotlight">

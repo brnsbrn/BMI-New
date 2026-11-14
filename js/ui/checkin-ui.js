@@ -7,15 +7,12 @@ import {
   getPlan, getState, getCurrentWeek, getProgress, hasCheckinForWeek,
   completedCount, addCheckin, incrementWeek, computeChange,
 } from '../state.js';
-import { validateCheckinForm, showFieldError, clearFieldErrors } from '../validation.js';
+import { validateCheckinForm, showFieldError, clearFieldErrors } from '../validation.js?v=simplified-ui-15';
 import { icon } from './icons.js';
 import { toast } from './modal.js';
 import { fmtNum, fmtChange, fmtDateLong, todayISO } from '../format.js';
 
-const ENERGY_LABELS = ['', 'Sangat rendah', 'Rendah', 'Netral', 'Tinggi', 'Sangat tinggi'];
-const DIFFICULTY_LABELS = ['', 'Sangat mudah', 'Mudah', 'Sedang', 'Sulit', 'Sangat sulit'];
-
-const FIELD_IDS = ['weight', 'waist', 'bodyFat', 'workoutsCompleted', 'energy', 'difficulty', 'feedback'];
+const FIELD_IDS = ['weight', 'waist', 'bodyFat', 'workoutsCompleted', 'feedback'];
 
 export function initCheckin() {
   const root = document.getElementById('checkin-page');
@@ -34,7 +31,6 @@ export function initCheckin() {
   }
 
   root.innerHTML = renderForm(plan, week);
-  bindSliders(root);
   bindCounter(root);
   bindSubmit(root);
 }
@@ -134,8 +130,6 @@ function renderForm(plan, week) {
 
         <fieldset class="checkin-fieldset">
           <legend>Feedback</legend>
-          ${slider('energy', 'Tingkat Energi', ENERGY_LABELS)}
-          ${slider('difficulty', 'Kesulitan Latihan', DIFFICULTY_LABELS)}
           <div class="input-group" style="margin-top:4px">
             <label class="input-label" for="feedback">Catatan <span class="label-hint">opsional</span></label>
             <textarea class="form-control" id="feedback" name="feedback" rows="4" maxlength="1000" placeholder="Bagaimana minggu ini berjalan? Apa yang terasa mudah/sulit?"></textarea>
@@ -154,45 +148,7 @@ function renderForm(plan, week) {
     </div>`;
 }
 
-function slider(id, label, optionLabels) {
-  return `
-    <div class="input-group">
-      <div class="range-wrap">
-        <div class="range-row">
-          <label class="input-label" for="${id}" style="margin:0">${label}</label>
-          <span class="range-value" id="${id}-value" aria-hidden="true">3</span>
-        </div>
-        <input type="range" id="${id}" name="${id}" min="1" max="5" step="1" value="3">
-        <div class="range-labels">
-          <span class="left">1 — ${optionLabels[1]}</span>
-          <span class="right">${optionLabels[5]} — 5</span>
-        </div>
-        <div class="slider-label-display" id="${id}-display">${optionLabels[3]}</div>
-        <p class="field-error" id="${id}-error" hidden></p>
-      </div>
-    </div>`;
-}
-
 /* ---------------- Bindings ---------------- */
-
-function bindSliders(root) {
-  ['energy', 'difficulty'].forEach((id) => {
-    const range = root.querySelector(`#${id}`);
-    if (!range) return;
-    const update = () => {
-      const value = Number(range.value);
-      range.style.setProperty('--range-progress', `${((value - 1) / 4) * 100}%`);
-      const valEl = root.querySelector(`#${id}-value`);
-      if (valEl) valEl.textContent = value;
-      const displayEl = root.querySelector(`#${id}-display`);
-      const labels = id === 'energy' ? ENERGY_LABELS : DIFFICULTY_LABELS;
-      if (displayEl) displayEl.textContent = labels[value];
-    };
-    range.addEventListener('input', update);
-    range.addEventListener('change', update);
-    update();
-  });
-}
 
 function bindCounter(root) {
   const textarea = root.querySelector('#feedback');
@@ -215,8 +171,6 @@ function bindSubmit(root) {
       waist: fd.get('waist'),
       bodyFat: fd.get('bodyFat'),
       workoutsCompleted: fd.get('workoutsCompleted'),
-      energy: fd.get('energy'),
-      difficulty: fd.get('difficulty'),
       feedback: fd.get('feedback'),
     };
 
@@ -243,8 +197,6 @@ function bindSubmit(root) {
       bodyFat: clean.bodyFat,
       workoutsScheduled: scheduled,
       workoutsCompleted: clean.workoutsCompleted,
-      energy: clean.energy,
-      difficulty: clean.difficulty,
       feedback: clean.feedback,
       weightChange: weightChange ?? null,
       waistChange: waistChange ?? null,
